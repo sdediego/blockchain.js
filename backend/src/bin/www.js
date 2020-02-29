@@ -3,12 +3,11 @@
 /**
  * Module dependencies.
  */
-import debugLib from 'debug';
 import http from 'http';
-
 import app from '../app';
+import getLogger from '../utils/logger';
 
-const debug = debugLib('backend:server');
+const logger = getLogger(__filename);
 
 /**
  * Get port from environment and store in Express.
@@ -82,5 +81,5 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? `pipe ${ addr }`
     : `port ${ addr.port }`;
-  debug(`Listenign on ${ bind }`);
+  logger.info(`Listening on ${ bind }`);
 }

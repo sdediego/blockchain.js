@@ -1,0 +1,12 @@
+{
+  "ALLOW_LOG_LEVELS": [
+    "error",
+    "warn",
+    "info",
+    "verbose",
+    "debug",
+    "silly"
+  ],
+  "DEFAULT_LOG_LEVEL": "info",
+  "DEFAULT_LOG_SILENT": false
+}

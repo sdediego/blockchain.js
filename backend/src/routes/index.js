@@ -1,3 +1,9 @@
+/**
+ * Blockchain API.
+ *
+ * @file Defines blockchain backend API routes.
+ */
+
 import express from 'express';
 
 const router = express.Router();

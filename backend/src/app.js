@@ -1,8 +1,13 @@
+/**
+ * Blockchain application.
+ *
+ * @file Defines blockchain application setup.
+ */
+
 import cookieParser from 'cookie-parser';
 import createError from 'http-errors';
 import express from 'express';
 import logger from 'morgan';
-
 import router from './routes/index';
 
 const app = express();

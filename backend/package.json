@@ -11,7 +11,7 @@
   "scripts": {
     "build": "babel src -d dist",
     "start": "npm run build && node dist/bin/www",
-    "dev": "npm run build && nodemon dist/bin/www"
+    "dev": "nodemon --exec babel-node src/bin/www"
   },
   "repository": {
     "type": "git",
@@ -26,17 +26,19 @@
   "bugs": {},
   "keywords": [],
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
     "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.6",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.6",
+    "babel-plugin-inline-json-import": "^0.3.2",
     "nodemon": "^2.0.2"
   }
 }

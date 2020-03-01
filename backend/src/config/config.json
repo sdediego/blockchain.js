@@ -1,4 +1,6 @@
 {
+  "BLOCK_HASH_LENGTH": 64,
+  "BLOCK_TIMESTAMP_LENGTH": 13,
   "ALLOW_LOG_LEVELS": [
     "error",
     "warn",

@@ -7,6 +7,19 @@
 import sha256 from 'crypto-js/sha256';
 
 /**
+ * Return UTC current epoch datetime in milliseconds.
+ *
+ * @access private
+ * @member {Function} Block
+ *
+ * @function
+ * @return {String} Current datetime timestamp.
+ */
+let getUTCNowTimestamp = () => {
+  return new Date().getTime();
+};
+
+/**
  * Create a unique 256-bit hash value (64 characters length) from the rest
  * of the block attributes values with sha256 cryptographic hash function.
  *
@@ -20,7 +33,6 @@ import sha256 from 'crypto-js/sha256';
  * @param  {Number} difficulty Block mining difficulty according to mining rate.
  * @param  {String} previousHash Previous block hash to link the blockchain.
  * @param  {Array}  data Transactions between the nodes in the network.
- *
  * @return {String} Block unique hash attribute.
  */
 let hashBlock = ({ index, timestamp, nonce, difficulty, previousHash, data }) => {
@@ -37,11 +49,10 @@ let hashBlock = ({ index, timestamp, nonce, difficulty, previousHash, data }) =>
  *
  * @function
  * @param  {String} hash Block data unique hash to prevent fraud.
- *
  * @return {String} Converted hexadecimal hash string to binary.
  */
 let hexToBinary = hash => {
   return parseInt(hash, 16).toString(2);
 };
  
-export { hashBlock, hexToBinary };
+export { getUTCNowTimestamp, hashBlock, hexToBinary };

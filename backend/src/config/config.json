@@ -1,6 +1,15 @@
 {
+  "GENESIS_BLOCK": {
+    "index": 0,
+    "timestamp": 1,
+    "nonce": 0,
+    "difficulty": 1,
+    "previousHash": "genesisPreviousHash",
+    "data": []
+  },
   "BLOCK_HASH_LENGTH": 64,
   "BLOCK_TIMESTAMP_LENGTH": 13,
+  "BLOCK_MINIG_RATE": 10000,
   "ALLOW_LOG_LEVELS": [
     "error",
     "warn",

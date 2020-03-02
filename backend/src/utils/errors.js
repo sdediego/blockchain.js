@@ -34,10 +34,16 @@ class BaseError extends Error {
   }
 }
 
+class BlockError extends BaseError {
+  constructor(message, code = null) {
+    super(message, code);
+  }
+}
+
 class LoggerError extends BaseError {
   constructor(message, code = null) {
     super(message, code);
   }
 }
 
-export { LoggerError };
+export { BlockError, LoggerError };

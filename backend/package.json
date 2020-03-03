@@ -11,7 +11,13 @@
   "scripts": {
     "build": "babel src -d dist",
     "start": "npm run build && node dist/bin/www",
-    "dev": "nodemon --exec babel-node src/bin/www"
+    "dev": "nodemon --exec babel-node src/bin/www",
+    "test": "jest --watchAll"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -41,6 +47,7 @@
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.6",
     "babel-plugin-inline-json-import": "^0.3.2",
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2"
   }
 }

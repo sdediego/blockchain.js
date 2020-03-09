@@ -5,9 +5,10 @@
  */
 
 import assert from 'assert';
-import { Schema, ValidationError } from 'validate';
+import Schema, { ValidationError } from 'validate';
+import config from '../../config/config.json';
 import getLogger from '../../utils/logger';
-import { hexToBinary, hashBlock } from '../utils';
+import { hashBlock } from '../utils';
 
 const logger = getLogger(__filename);
 
@@ -79,7 +80,7 @@ let validateHash = (value, block, field) => {
   }
   if (field === 'hash') {
     try {
-      assert(hexToBinary(value).startsWith('0'.repeat(block.difficulty)));
+      assert(value.startsWith('0'.repeat(block.difficulty)));
       assert(value === hashBlock(block));
     } catch (error) {
       const message = `Invalid hash value: ${ value }.`;

@@ -15,10 +15,11 @@ let generateBlock = () => {
 };
 
 describe('Block Schema', () => {
-  let block;
+  let block, properties;
 
   beforeEach(() => {
     block = generateBlock();
+    properties = Object.keys(block);
   });
 
   it('validates the correct block schema properties types', () => {
@@ -26,16 +27,13 @@ describe('Block Schema', () => {
     expect(errors).toHaveLength(0);
   });
 
-  it('invalidates the incorrect block schema properties types', () => {
-    const properties = Object.keys(block);
+  it('throws error for incorrect block schema properties types', () => {
     const randomProperty = properties[properties.length * Math.random() << 0];
-    console.log(`Property: ${ randomProperty }`);
     block[randomProperty] = false;
     expect(() => blockSchema.validate(block)).toThrow(ValidationError);
   });
 
-  it('invalidates the incorrect block schema properties values', () => {
-    const properties = Object.keys(block);
+  it('throws error for incorrect block schema properties values', () => {
     delete properties.data;
     const randomProperty = properties[properties.length * Math.random() << 0];
     block[randomProperty] = typeof randomProperty === 'number' ? -1 : 'string';

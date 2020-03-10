@@ -8,7 +8,7 @@ import blockSchema from '../schemas/block.schema';
 import config from '../../config/config.json';
 import getLogger from '../../utils/logger';
 import { BlockError } from '../../utils/errors';
-import { getUTCNowTimestamp, hashBlock, hexToBinary } from '../utils';
+import { getUTCNowTimestamp, hashBlock } from '../utils';
 
 const logger = getLogger(__filename);
 
@@ -40,7 +40,7 @@ class Block {
    * @param  {Array}  data Transactions between the nodes in the network.
    * @return {Block}  Class instance.
    */
-  constructor(index, timestamp, nonce, difficulty, previousHash, hash, data) {
+  constructor({index, timestamp, nonce, difficulty, previousHash, hash, data}) {
     this.index = index;
     this.timestamp = timestamp;
     this.nonce = nonce;
@@ -61,13 +61,13 @@ class Block {
    */
   toString() {
     return `Block -
-      Index         : ${ this.index },
-      Timestamp     : ${ this.timestamp },
-      Previous Hash : ${ this.previousHash },
-      Hash          : ${ this.hash },
-      Nonce         : ${ this.nonce },
-      Difficulty    : ${ this.difficulty },
-      Data          : ${ this.data }.`;
+      Index        : ${ this.index },
+      Timestamp    : ${ this.timestamp },
+      Nonce        : ${ this.nonce },
+      Difficulty   : ${ this.difficulty },
+      PreviousHash : ${ this.previousHash },
+      Hash         : ${ this.hash },
+      Data         : ${ this.data }.`;
   }
 
   /**
@@ -88,11 +88,11 @@ class Block {
    * @return {Block}  Class instance.
    * @throws {BlockError}
    */
-  static create(index, timestamp, nonce, difficulty, previousHash, hash, data) {
+  static create({index, timestamp, nonce, difficulty, previousHash, hash, data}) {
     const block = { index, timestamp, nonce, difficulty, previousHash, hash, data };
     
     Block.isValidSchema(block);
-    return new this(...block);
+    return new this(block);
   }
 
   /**
@@ -106,10 +106,10 @@ class Block {
    * @throws {BlockError}
    */
   static isValidSchema(block) {
-    const errors = blockSchema.validate(block);
-
-    if (errors.length > 0) {
-      const message = `Block schema validation error: ${ errors }.`;
+    try {
+      blockSchema.validate(block);
+    } catch (error) {
+      const message = `Block schema validation error: ${ error }.`;
       logger.error(`[Block] Validation error. ${ message }`);
       throw new BlockError(message);
     }
@@ -126,9 +126,8 @@ class Block {
    */
   static genesis() {
     const genesisBlock = config.GENESIS_BLOCK;
-
     genesisBlock.hash = hashBlock(genesisBlock);
-    return new this(...genesisBlock);
+    return new this(genesisBlock);
   }
 
   /**
@@ -143,8 +142,8 @@ class Block {
    * @returns {Block} New block instance.
    */
   static mineBlock(previousBlock, data) {
-    const { index, difficulty, hash } = previousBlock;
-    const block = new Object();
+    let { index, difficulty, hash } = previousBlock;
+    let block = new Object();
     block.index = ++index;
     block.nonce = 0;
     block.difficulty = difficulty;
@@ -176,7 +175,7 @@ class Block {
       block.timestamp = getUTCNowTimestamp();
       block.difficulty = Block.adjustDifficulty(previousBlock, block.timestamp);
       hash = hashBlock(block);
-    } while (hexToBinary(hash).substring(0, block.difficulty) !== '0'.repeat(block.difficulty));
+    } while (hash.substring(0, block.difficulty) !== '0'.repeat(block.difficulty));
 
     block.hash = hash;
     return block;
@@ -285,6 +284,8 @@ class Block {
       logger.error(`[Block] Deserialization error. ${ message }`);
       throw new BlockError(message);
     }
-    return new this(...block);
+    return new this(block);
   }
 }
+
+export default Block;

@@ -26,7 +26,7 @@ class BaseError extends Error {
    * @param  {String}    code    Custom error number code.
    * @return {BaseError} Class instance.
    */
-  constructor(message, code) {
+  constructor(message = null, code = null) {
     message = code !== null ? `Error ${ code } ${ message }` : message;
     super(message);
     this.code = code;
@@ -35,15 +35,21 @@ class BaseError extends Error {
 }
 
 class BlockError extends BaseError {
-  constructor(message, code = null) {
+  constructor(message = null, code = null) {
+    super(message, code);
+  }
+}
+
+class BlockchainError extends BaseError {
+  constructor(message = null, code = null) {
     super(message, code);
   }
 }
 
 class LoggerError extends BaseError {
-  constructor(message, code = null) {
+  constructor(message = null, code = null) {
     super(message, code);
   }
 }
 
-export { BlockError, LoggerError };
+export { BlockError, BlockchainError, LoggerError };

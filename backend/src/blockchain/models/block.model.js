@@ -67,7 +67,7 @@ class Block {
       Difficulty   : ${ this.difficulty },
       PreviousHash : ${ this.previousHash },
       Hash         : ${ this.hash },
-      Data         : ${ this.data }.`;
+      Data         : ${ this.data }`;
   }
 
   /**
@@ -222,7 +222,7 @@ class Block {
     }
 
     const difficultyDelta = Math.abs(previousBlock.difficulty - block.difficulty);
-    if ( difficultyDelta > 1) {
+    if (difficultyDelta > 1) {
       const message = `Difficulty must differ as much by 1 between blocks: ${ difficultyDelta }.`;
       logger.error(`[Block] Validation error. ${ message }`);
       throw new BlockError(message);
@@ -278,7 +278,7 @@ class Block {
    */
   static deserialize(block) {
     try {
-      block = JSON.parse(block);
+      block = typeof block === 'string' ? JSON.parse(block) : block;
     } catch (error) {
       const message = `Could not decode block: ${ error.message }.`;
       logger.error(`[Block] Deserialization error. ${ message }`);

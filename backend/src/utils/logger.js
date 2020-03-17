@@ -22,7 +22,7 @@ const { combine, colorize, label, printf, timestamp } = format;
  * @param  {String}   filename File to log.
  * @return {Function} Logger function.
  */
-let getLogger = filename => {
+export const getLogger = filename => {
   const logger = createLogger({
     level: logConfig.level,
     format: combine(
@@ -38,5 +38,15 @@ let getLogger = filename => {
   });
   return logger;
 };
+
+export class Stream {
+  constructor(logger) {
+    this.logger = logger;
+  }
+
+  write(message) {
+    this.logger.info(message);
+  }
+}
 
 export default getLogger;

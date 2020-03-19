@@ -21,15 +21,17 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sdediego/blockchain.js"
   },
-  "homepage": "",
+  "homepage": "https://github.com/sdediego/blockchain.js",
   "license": "MIT",
   "readmeFilename": "README.md",
   "engines": {
     "node": "*"
   },
-  "bugs": {},
+  "bugs": {
+    "url": "https://github.com/sdediego/blockchain.js/issues"
+  },
   "keywords": [],
   "dependencies": {
     "@hapi/joi": "^17.1.0",

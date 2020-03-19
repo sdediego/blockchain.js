@@ -37,4 +37,20 @@ router.get('/blockchain', (req, res, next) => {
   });
 });
 
+router.get('/mine', (req, res, next) => {
+  logger.info('[API] GET mine. Mining block.');
+  const data = ['data'];
+  const block = blockchain.addBlock(data);
+  const message = `Block mined: \n${ block }.`;
+  logger.info(`[API] GET mine. ${ message }`);
+
+  return res.status(200).json({
+    status: {
+      code: res.statusCode,
+      msg: 'OK'
+    },
+    data: block
+  });
+});
+
 export default router;

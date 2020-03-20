@@ -8,6 +8,7 @@ import http from 'http';
 import request from 'supertest';
 import app from '../../../src/app/api';
 import Blockchain from '../../../src/blockchain/models/blockchain.model';
+import Block from '../../../src/blockchain/models/block.model';
  
 describe('Backend API', () => {
   let server;
@@ -48,5 +49,18 @@ describe('Backend API', () => {
         expect(blockchain instanceof Blockchain).toBe(true);
         return done();
       })
+  });
+
+  it('returns json response with block data', done => {
+    request(server)
+      .get('/mine')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then(res => {
+        const stringified = res.body.data;
+        const block = Block.deserialize(stringified);
+        expect(block instanceof Block).toBe(true);
+        return done();
+      });
   });
 });

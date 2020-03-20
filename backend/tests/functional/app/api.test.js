@@ -7,6 +7,7 @@
 import http from 'http';
 import request from 'supertest';
 import app from '../../../src/app/api';
+import Blockchain from '../../../src/blockchain/models/blockchain.model';
  
 describe('Backend API', () => {
   let server;
@@ -34,5 +35,18 @@ describe('Backend API', () => {
         },
         data: 'Welcome to Blockchain'
       }, done);
+  });
+
+  it('returns json response with blockchain data', done => {
+    request(server)
+      .get('/blockchain')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then(res => {
+        const chain = res.body.data.chain;
+        const blockchain = Blockchain.deserialize(chain);
+        expect(blockchain instanceof Blockchain).toBe(true);
+        return done();
+      })
   });
 });
